@@ -9,6 +9,10 @@
 #include <devicetree.h>
 #include <drivers/gpio.h>
 
+#include <stdio.h>
+
+#include "gpio.h"
+
 /* 1000 msec = 1 sec */
 #define SLEEP_TIME_MS   1000
 
@@ -43,9 +47,16 @@ void main(void)
 		return;
 	}
 
+	gpio_init();
+
 	while (1) {
 		gpio_pin_set(dev, PIN, (int)led_is_on);
 		led_is_on = !led_is_on;
 		k_msleep(SLEEP_TIME_MS);
+		printf("Hello world\n");
+		printf("%i\n", PIN); 
+		gpio_LED2_set(1);
+		k_msleep(SLEEP_TIME_MS);
+		gpio_LED2_set(0);
 	}
 }
